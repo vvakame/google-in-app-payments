@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>テスト</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('payments', '1.0', {
+  'packages': ['sandbox_config']
+});
+
+//Success handler
+var successHandler = function(purchaseAction){
+  console.log("Purchase completed successfully.");
+}
+
+//Failure handler
+var failureHandler = function(purchaseActionError){
+  console.log("Purchase did not complete.");
+}
+
+function purchase(){
+  var generatedJwt;
+  $.get("/pre", function(data){
+    generatedJwt = data.jwt;
+    console.log(generatedJwt);
+    goog.payments.inapp.buy({ 'jwt' : generatedJwt, 'success' : successHandler, 'failure' : failureHandler });
+  });
+}
+
+</script>
+</head>
+<body>
+( ･`ω･´)
+<button class="buy-button"
+  id="buybutton1" name="buy" type="button"
+  onClick="purchase()">
+  Buy
+</button>
+</body>
+</html>

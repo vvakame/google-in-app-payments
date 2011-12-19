@@ -1,0 +1,4 @@
+ISSUER=Seller Identifier
+SIGNING_KEY=Seller Secret
+# sandbox https://sandbox.google.com/checkout/customer/gadget/inapp/settings.html
+# production https://checkout.google.com/customer/gadget/inapp/settings.html

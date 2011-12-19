@@ -1,28 +1,34 @@
 package net.vvakame.googleinapppayments.controller;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.slim3.tester.ControllerTestCase;
 
+import com.google.appengine.repackaged.org.json.JSONObject;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class IndexControllerTest extends ControllerTestCase {
+public class PreControllerTest extends ControllerTestCase {
+
+	static final String PATH = "/pre";
 
 	@Test
-	public void test() throws NullPointerException, IllegalArgumentException,
-			IOException, ServletException {
-		tester.start("/");
-		assertThat(tester.response.getStatus(),
-				is(equalTo(HttpServletResponse.SC_OK)));
+	public void test() throws Exception {
+		tester.start(PATH);
+
+		assertThat(tester.getController(), instanceOf(PreController.class));
+		assertThat(tester.response.getStatus(), is(200));
+
+		String outputAsString = tester.response.getOutputAsString();
+
+		JSONObject json = new JSONObject(outputAsString);
+		assertThat(json.getString("jwt"), notNullValue());
+
+		System.out.println(outputAsString);
 	}
 
 	LocalServiceTestHelper helper;
