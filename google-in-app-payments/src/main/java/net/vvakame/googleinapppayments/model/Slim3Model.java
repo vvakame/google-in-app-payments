@@ -8,9 +8,9 @@ import com.google.appengine.api.datastore.Key;
 @Model
 public class Slim3Model {
 
-	@Attribute(primaryKey=true)
+	@Attribute(primaryKey = true)
 	private Key key;
-	
+
 	private String prop1;
 
 	/**
@@ -21,7 +21,8 @@ public class Slim3Model {
 	}
 
 	/**
-	 * @param key the key to set
+	 * @param key
+	 *            the key to set
 	 */
 	public void setKey(Key key) {
 		this.key = key;
@@ -35,7 +36,8 @@ public class Slim3Model {
 	}
 
 	/**
-	 * @param prop1 the prop1 to set
+	 * @param prop1
+	 *            the prop1 to set
 	 */
 	public void setProp1(String prop1) {
 		this.prop1 = prop1;
