@@ -80,7 +80,9 @@ public class PostController extends Controller {
 
 		JsonToken token;
 		if (test) {
-			token = parser.deserialize(jwt);
+			// jsontoken 1.1-SNAPSHOT 以降じゃないと使えない… 
+			// token = parser.deserialize(jwt);
+			token = null;
 		} else {
 			token = parser.verifyAndDeserialize(jwt);
 			logger.info("signature verified.");
