@@ -64,9 +64,9 @@ public class PreController extends Controller {
 		// Configure request object
 		JsonObject request;
 		{
-			String itemName = "Piece of Cake";
-			String itemDescription = "Virtual chocolate cake to fill your virtual tummy";
-			double price = 10.50;
+			String itemName = "vvakame";
+			String itemDescription = "super hakka.";
+			double price = 0.50;
 			String currencyCode = "USD";
 			String sellerData = "user_id:1224245,offer_code:3098576987,affiliate:aksdfbovu9j";
 

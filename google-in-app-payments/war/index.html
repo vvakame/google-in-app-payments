@@ -7,7 +7,8 @@
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load('payments', '1.0', {
-  'packages': ['sandbox_config']
+  // 'packages': ['sandbox_config']
+  'packages': ['production_config']
 });
 
 //Success handler
@@ -29,13 +30,15 @@ function purchase(){
   });
 }
 
+$(document).ready(function(){
+  $("#buy").click(purchase);
+});
+
 </script>
 </head>
 <body>
 ( ･`ω･´)
-<button class="buy-button"
-  id="buybutton1" name="buy" type="button"
-  onClick="purchase()">
+<button id="buy" name="buy" type="button">
   Buy
 </button>
 </body>
