@@ -31,7 +31,9 @@ function purchase(){
 
   $.get("/pre", function(data){
     generatedJwt = data.jwt;
-    console.log(generatedJwt);
+    if (window.console !== undefined) {
+      console.log(generatedJwt);
+    }
     goog.payments.inapp.buy({ 'jwt' : generatedJwt, 'success' : successHandler, 'failure' : failureHandler });
   });
 }
