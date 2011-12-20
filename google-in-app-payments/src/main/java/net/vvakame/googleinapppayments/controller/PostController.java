@@ -1,10 +1,7 @@
 package net.vvakame.googleinapppayments.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.security.SignatureException;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import net.oauth.jsontoken.Checker;
@@ -20,6 +17,7 @@ import net.oauth.jsontoken.discovery.VerifierProviders;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
+import org.slim3.util.StringUtil;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -29,28 +27,13 @@ public class PostController extends Controller {
 	static final Logger logger = Logger.getLogger(PostController.class
 			.getName());
 
-	static final Properties PROPERTIES;
+	static final String ISSUER = PropertyUtil.getIssuer();
+	static final String SIGNING_KEY = PropertyUtil.getSigningKey();
 
-	static {
-		try {
-			PROPERTIES = new Properties();
-			InputStream is = PreController.class
-					.getResourceAsStream("/payments.properties");
-			PROPERTIES.load(is);
-		} catch (IOException e) {
-			throw new RuntimeException("/payments.properties required", e);
-		}
-	}
-
-	static final String ISSUER = PROPERTIES.getProperty("ISSUER");
-	static final String SIGNING_KEY = PROPERTIES.getProperty("SIGNING_KEY");
-
-	static Clock clock;
+	static Clock clock = new SystemClock();
 	static VerifierProviders locators;
 
 	static {
-		clock = new SystemClock();
-
 		try {
 			final Verifier hmacVerifier = new HmacSHA256Verifier(
 					SIGNING_KEY.getBytes());
@@ -66,13 +49,19 @@ public class PostController extends Controller {
 			locators.setVerifierProvider(SignatureAlgorithm.HS256, hmacLocator);
 
 		} catch (Exception e) {
-
+			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
 	protected Navigation run() throws Exception {
 		String jwt = asString("jwt");
+		final boolean test;
+		if (StringUtil.isEmpty(asString("test"))) {
+			test = false;
+		} else {
+			test = true;
+		}
 
 		if (jwt == null) {
 			response.setStatus(400);
@@ -89,7 +78,13 @@ public class PostController extends Controller {
 					}
 				});
 
-		JsonToken token = parser.deserialize(jwt);
+		JsonToken token;
+		if (test) {
+			token = parser.deserialize(jwt);
+		} else {
+			token = parser.verifyAndDeserialize(jwt);
+			logger.info("signature verified.");
+		}
 
 		JsonObject json = token.getPayloadAsJsonObject();
 

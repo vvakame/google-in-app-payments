@@ -1,13 +1,10 @@
 package net.vvakame.googleinapppayments.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Properties;
 
 import net.oauth.jsontoken.JsonToken;
 import net.oauth.jsontoken.crypto.HmacSHA256Signer;
@@ -21,21 +18,8 @@ import com.google.gson.JsonObject;
 
 public class PreController extends Controller {
 
-	static final Properties PROPERTIES;
-
-	static {
-		try {
-			PROPERTIES = new Properties();
-			InputStream is = PreController.class
-					.getResourceAsStream("/payments.properties");
-			PROPERTIES.load(is);
-		} catch (IOException e) {
-			throw new RuntimeException("/payments.properties required", e);
-		}
-	}
-
-	static final String ISSUER = PROPERTIES.getProperty("ISSUER");
-	static final String SIGNING_KEY = PROPERTIES.getProperty("SIGNING_KEY");
+	static final String ISSUER = PropertyUtil.getIssuer();
+	static final String SIGNING_KEY = PropertyUtil.getSigningKey();
 
 	@Override
 	protected Navigation run() throws Exception {
@@ -68,7 +52,7 @@ public class PreController extends Controller {
 			String itemDescription = "super hakka.";
 			double price = 0.50;
 			String currencyCode = "USD";
-			String sellerData = "user_id:1224245,offer_code:3098576987,affiliate:aksdfbovu9j";
+			String sellerData = ":-P";
 
 			request = createRequest(itemName, itemDescription, price,
 					currencyCode, sellerData);
