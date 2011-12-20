@@ -20,7 +20,7 @@ public class PostControllerTest extends ControllerTestCase {
 		tester.request
 				.addParameter(
 						"jwt",
-						"{ \"iss\" : \"Google\",\"aud\" : \"1337133713371337\",\"typ\" : \"google/payments/inapp/item/v1/postback/buy\",\"iat\" : \"1309988959\",\"exp\" : \"1409988959\",\"request\" :{\"name\" : \"Piece of Cake\",\"description\" : \"Virtual chocolate cake to fill your virtual tummy\",\"price\" : \"10.50\",\"currencyCode\" : \"USD\",\"sellerData\" : \"user_id:1224245,offer_code:3098576987,affiliate:aksdfbovu9j\"},\"response\": {\"orderId\": \"3485709183457474939449\"}}");
+						"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHb29nbGUiLCJhdWQiOiIwODU3ODA2NTUwMDAzNTcxODM1OCIsInR5cCI6Imdvb2dsZS9wYXltZW50cy9pbmFwcC9pdGVtL3YxL3Bvc3RiYWNrL2J1eSIsImlhdCI6MTMyNDM2MDM2MCwiZXhwIjoxMzI0MzYwMzY1LCJyZXF1ZXN0Ijp7ImN1cnJlbmN5Q29kZSI6IlVTRCIsInByaWNlIjoiMC41IiwibmFtZSI6InZ2YWthbWUiLCJzZWxsZXJEYXRhIjoidXNlcl9pZDoxMjI0MjQ1LG9mZmVyX2NvZGU6MzA5ODU3Njk4NyxhZmZpbGlhdGU6YWtzZGZib3Z1OWoiLCJkZXNjcmlwdGlvbiI6InN1cGVyIGhha2thLiJ9LCJyZXNwb25zZSI6eyJvcmRlcklkIjoiMTI1NDI0NTc4MTc0MDIwMjM2OTAuQy4xNjg4MTE1MTQyMTYwMTIxIn19.uKw-PesbY-cnoHo9hQ8RCDVWHbC30Ejjnr0Rkkow3lk");
 
 		tester.start(PATH);
 
@@ -29,7 +29,8 @@ public class PostControllerTest extends ControllerTestCase {
 
 		String outputAsString = tester.response.getOutputAsString();
 
-		assertThat(outputAsString, is("3485709183457474939449"));
+		assertThat(outputAsString,
+				is("12542457817402023690.C.1688115142160121"));
 
 		System.out.println(outputAsString);
 	}
