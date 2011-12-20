@@ -23,10 +23,16 @@ function purchase(){
   var generatedJwt;
   var successHandler = function(purchaseAction){
     alert("支払いが完了しました。");
+    if (window.console !== undefined) {
+      console.log(purchaseAction);
+    }
   };
 
   var failureHandler = function(purchaseActionError){
     alert("支払いに失敗しました。");
+    if (window.console !== undefined) {
+      console.log(purchaseActionError);
+    }
   };
 
   $.get("/pre", function(data){

@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import net.oauth.jsontoken.JsonToken;
 import net.oauth.jsontoken.crypto.HmacSHA256Signer;
-import net.sf.json.JSONObject;
 
 import org.joda.time.Instant;
 import org.slim3.controller.Controller;
@@ -28,10 +27,9 @@ public class PreController extends Controller {
 
 		PrintWriter writer = response.getWriter();
 
-		JSONObject json = new JSONObject();
-		json.put("jwt", getJWT());
+		String json = "{\"jwt\":\"" + getJWT().toString() + "\"}";
 
-		writer.write(json.toString());
+		writer.write(json);
 
 		response.flushBuffer();
 
