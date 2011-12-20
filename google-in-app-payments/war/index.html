@@ -3,43 +3,38 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>テスト</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-google.load('payments', '1.0', {
-  // 'packages': ['sandbox_config']
-  'packages': ['production_config']
-});
-
-//Success handler
-var successHandler = function(purchaseAction){
-  console.log("Purchase completed successfully.");
-}
-
-//Failure handler
-var failureHandler = function(purchaseActionError){
-  console.log("Purchase did not complete.");
-}
-
-function purchase(){
-  var generatedJwt;
-  $.get("/pre", function(data){
-    generatedJwt = data.jwt;
-    console.log(generatedJwt);
-    goog.payments.inapp.buy({ 'jwt' : generatedJwt, 'success' : successHandler, 'failure' : failureHandler });
-  });
-}
-
-$(document).ready(function(){
-  $("#buy").click(purchase);
-});
-
-</script>
 </head>
 <body>
 ( ･`ω･´)
 <button id="buy" name="buy" type="button">
   Buy
 </button>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('payments', '1.0', {
+  // 'packages': ['sandbox_config']
+  'packages': ['production_config'],
+  'callback': function(){ $("#buy").click(purchase) }
+});
+
+function purchase(){
+  var generatedJwt;
+  var successHandler = function(purchaseAction){
+    alert("支払いが完了しました。");
+  }
+
+  var failureHandler = function(purchaseActionError){
+    alert("支払いに失敗しました。");
+  }
+
+  $.get("/pre", function(data){
+    generatedJwt = data.jwt;
+    console.log(generatedJwt);
+    goog.payments.inapp.buy({ 'jwt' : generatedJwt, 'success' : successHandler, 'failure' : failureHandler });
+  });
+}
+</script>
 </body>
 </html>
