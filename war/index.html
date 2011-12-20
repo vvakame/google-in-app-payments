@@ -23,11 +23,11 @@ function purchase(){
   var generatedJwt;
   var successHandler = function(purchaseAction){
     alert("支払いが完了しました。");
-  }
+  };
 
   var failureHandler = function(purchaseActionError){
     alert("支払いに失敗しました。");
-  }
+  };
 
   $.get("/pre", function(data){
     generatedJwt = data.jwt;
