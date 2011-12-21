@@ -1,0 +1,16 @@
+h1. Google In-App Payments
+
+h2. まず見るべきサイト
+
+http://tech.topgate.co.jp/gijutsu-shiryou/google-in-app-payments
+
+h2. 動作させるために必要な作業
+
+src/main/resources/payments.properties が必要です。 同ディレクトリに payments.properties.sample があるのでコピペして内容埋めて使ってください。
+mvn eclipse:eclipse を叩いてからEclipseにimportしてご利用ください。
+
+PostbackURL が /post に向くように設定してください。
+
+# sandbox https://sandbox.google.com/checkout/customer/gadget/inapp/settings.html
+# production https://checkout.google.com/customer/gadget/inapp/settings.html
+
